@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/pagestyle_new.css">
+	{% block head %}
+	{% endblock %}
+</head>
+<body>
+<div id="container">
+	<!-- HEADER -->
+	<div id="header">
+		<h1>Whiteboard</h1>
+		<a href="accountinfo.html">{{user.login}}</a> | 
+		<a href="logout.html">Log Out</a>
+	</div>
+	<!-- END HEADER -->
+	<!-- NAVIGATION -->
+	<div id="navigation">
+		<ul>
+			<li class="top-item"><a href="userpage.html">Home</a></li>
+			<li class="top-item">
+				<a href="">Courses</a>
+				<ul>
+					{% for course in courses %}
+					<li><a href='coursepage.html?courseid={{course.key.id}}'>{{course.number}}</a></li>
+					{% endfor %}
+				</ul>
+			</li>
+			<li class="top-item"><a href="accountinfo.html">Account Info</a></li>
+			<li class="top-item"><a href="">Report Problem</a></li>
+		</ul>
+	</div>
+	<!-- END NAVIGATION -->
+	{% block maincontent %}
+	{% endblock %}
+</div>
+</body>
+</html>

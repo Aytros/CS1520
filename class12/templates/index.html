@@ -1,0 +1,15 @@
+<html>
+<body>
+{% if login %}
+<a href="{{login}}">Click Here to sign in.</a>
+{% else %}
+Hello, {{nickname}}! Your email is {{email}}<br>
+<a href="{{logout}}">Click Here to sign out.</a>
+<form method="post" action="/">
+Answer: <input type="text" name="answer"><br>
+Correct: <input type="text" name="correct"><br>
+<input type="submit">
+</form>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,159 @@
+<html>
+<head>
+<script>
+
+// The groups for our refresh
+var groups = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O"];
+
+// The number of minutes we'll wait before turning red
+var MAX_MINUTES = 4;
+
+var BLACK = "#000000";
+var RED = "#DB4437";
+
+var startTime;
+var stopped = true;
+
+// convenience function
+function setColor(id, color) {
+  document.getElementById(id).style["color"] = color;
+}
+
+// convenience function
+function setText(id, text) {
+  document.getElementById(id).innerText = text;
+}
+
+// convenience function
+function time() {
+  return new Date().getTime();
+}
+
+function resetTimer() {
+  setColor("timer", BLACK);
+  setText("timer", "0:00");
+}
+
+function createTimer() {
+  var result = new Object();
+  var difference = Math.round((time() - startTime) / 1000);
+  result.minutes = Math.floor(difference / 60);
+  result.seconds = Math.round(difference - (result.minutes * 60));
+  result.toString = function() {
+    var text = this.minutes + ":";
+    if (this.seconds < 10) {
+      text += "0";
+    }
+    text += this.seconds;
+    return text;
+  };
+  return result;
+}
+
+// call this frequently to update the timer.
+function updateTime() {
+
+  if (stopped) {
+    resetTimer();
+  } else {
+    // if we're not stopped, we'll update the time
+	var timer = createTimer();
+    setText("timer", timer.toString());
+    
+    var color = BLACK;
+    if (timer.minutes >= MAX_MINUTES) {
+      color = RED;
+    }
+    setColor("timer", color);
+    
+    // when we're done, we'll set a timeout to call this again in 1/10 of a second
+    setTimeout('updateTime();', 100);
+  }
+}
+
+// This starts calls to updateTime() and sets the stopped flag to false.
+function startTimer() {
+  stopped = false;
+  startTime = time();
+  updateTime();
+}
+
+// This removes a group from our groups array and updates the page.
+function changeGroup() {
+  var text = "-finished-";
+  if (groups.length > 0) {
+    var index = Math.floor(Math.random() * groups.length);
+    var group = groups.splice(index, 1);
+    text = "-Group " + group + "-";
+    updateRemainingGroups();
+  }
+  setText("group", text);
+  stopped = true;
+}
+
+// this updates the "groups" tag to include all of the remaining groups.
+function updateRemainingGroups() {
+  var groupsText = groups.length + ' Groups Remaining';
+  if (groups.length > 0) {
+    groupsText += ': ';
+    for (var i = 0; i < groups.length; i++) {
+      if (i > 0) {
+        groupsText += ', ';
+      }
+      groupsText += groups[i];
+    }
+  }
+  setText("groups", groupsText);
+}
+
+function getNewGroup() {
+  var groupName = prompt("What is the new group?");
+  if (groupName) {
+    groups.push(groupName);
+    updateRemainingGroups();
+  }
+}
+
+// we want to draw 0:00 when the page loads, so we call updateTime on page load
+window.onload = function() {
+  updateTime();
+  updateRemainingGroups();
+}
+
+</script>
+<style>
+#group {
+  color: #4285F4;
+  font-size: 100pt;
+  font-weight: bold;
+}
+
+#timer {
+  font-size: 320pt;
+  font-weight: bold;
+}
+
+input {
+  margin: 20px;
+  border: 5px solid #0F9D58;
+  font-size: 24pt;
+  background: #ffffff;
+}
+
+div {
+  font-family: Tahoma;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+<br>
+<div id="group">-not started-</div>
+<div id="timer"></div>
+<div>
+<input type="button" onclick="startTimer();" value="START TIMER">
+<input type="button" onclick="changeGroup();" value="NEXT GROUP">
+</div>
+<div id="groups" onclick="getNewGroup();"></div>
+</body>
+</html>

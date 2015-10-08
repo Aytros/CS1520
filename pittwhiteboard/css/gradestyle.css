@@ -1,0 +1,134 @@
+#container {
+	margin: 0 auto;
+	width: 100%;
+	background: #fff;
+	font-family: 'Roboto Slab', serif;
+	background-image: url("notebook.png");
+}
+
+#header {
+	background: #E6E6FA;
+	padding: 20px;
+	text-align: right;
+}
+
+#header h1 { 
+	margin: 0;
+}
+
+#navigation {
+	float: left;
+	width: 100%;
+	background: #070A61;
+}
+
+#navigation ul {
+	margin: 0;
+	padding: 0;
+}
+
+#navigation ul li {
+	list-style-type: none;
+	display: inline;
+}
+
+#navigation li a {
+	display: block;
+	float: left;
+	padding: 5px 10px;
+	color: #fff;
+	text-decoration: none;
+	border-right: 1px solid #fff;
+}
+
+#navigation li a:hover {
+	background: #DAA520;
+}
+
+#content-container {
+	float: left;
+	width: 100%;
+	background: #FFF;
+}
+
+#left {
+	clear: left;
+	float: left;
+	width: 60%;
+	padding: 20px 0;
+	margin: 0 0 0 4%;
+	display: inline;
+}
+
+#left h2 {
+	margin: 0;
+}
+
+#grades, #grades-inner {
+	width: 100%;
+}
+
+#grades th {
+	font-weight: bold;
+	text-align: right;
+	background-color: #e0e0e0;
+	font-size: 20px;
+}
+
+#grades-inner .assig-title {
+	width: 70%;
+}
+
+#grades-inner .total {
+	border-top: 1px solid #000;
+	font-weight: bold;
+}
+
+#right {
+	float: right;
+	width: 26%;
+	padding: 20px 0;
+	margin: 0 3% 0 0;
+	display: inline;
+}
+
+#right h3 { 
+	margin: 0;
+	text-align: justify;
+}
+
+#right-navigation {
+	float: left;
+	width: 100%;
+}
+
+#right-navigation ul {
+	margin: 0;
+	padding: 0;
+}
+
+#right-navigation ul li {
+	padding: 5px 10px;
+	list-style-type: none;
+	text-align: center;
+	background: #070A61;
+	border-top:1px solid #fff;
+}
+
+#right-navigation ul li:hover {
+	background: #DAA520;
+}
+
+#right-navigation li a {
+	color: #fff;
+	text-decoration: none;
+}
+
+#footer {
+	clear: left;
+	background: #E6E6FA;
+	text-align: right;
+	font-size: 12px;
+	padding: 20px;
+	height: 1%;
+}

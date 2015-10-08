@@ -1,0 +1,142 @@
+How to use the DB_Methods:
+	1) Create some sort of global (or local) DB_Methods object
+	2) Call the db methods!
+Code!
+
+	db = DB_Methods()
+
+Import statement:
+
+	import sys
+	sys.path.insert(0,'/test')
+
+	from DB_Methods_And_Classes import *
+
+That's it! Now you can call the DB_Methods from the db object, wicked!
+
+Here's a list of the current DB_Method headers, plus what they do.
+
+register_user(self, p, e, fname,lname, u)
+
+	This method takes all the information a user needs to register
+	and creates a new DB entry for it. Returns 0 if things are all good.
+	Arguments are as follows:
+	1: user's password
+	2: user's email
+	3: user's first name
+	4: user's last name
+	5: user's university
+
+check_login(self, l, p)
+
+	This method takes the users login and password and makes
+	sure it's correct. returns 1 if good, 0 if pass/name combo
+	don't match. Arguments are as follows
+	1: entered login
+	2: entered password
+
+fetch_user_by_login(self,l)
+
+	Grabs the full user object by the login. I'm thinking we use
+	this when the user properly authenticates, and we don't have 
+	their id.
+	Returns user object if it exists, otherwise returns None
+	Arg 1: User's login
+
+create_course(self, user, name, c_loc, c_day, r_loc, r_day,
+						p_name, p_email, p_loc, p_hours, ta_name, ta_email, 
+						ta_loc, ta_hours)
+
+	This method takes a whole shit ton of arguments, some of which we will
+	have to handle null values for, then creates a course entry for it.
+	Here are the args, nullable values will be noted
+	Arg1: user object (ndb.Model User)
+	Arg2: course name (string)
+	Arg3: course location (string)
+	Arg4: course_day_time (DateTimeProperty)
+	Arg5: recitation_location (String, nullable)
+	Arg6: recitation_day_time (DateTimeProperty, nullable)
+	Arg7: professor name (String)
+	Arg8: professor email (String, nullable)
+	Arg9: professor office location (String, nullable)
+	Arg10: professor office hours (DateTimeProperty, nullable)
+	Arg11: ta name (String, nullable)
+	Arg12: ta email (String, nullable)
+	Arg13: ta office location (String, nullable)
+	Arg14: ta office hours (DateTimeProperty, nullable)
+
+update_course(self, course, user, name, c_loc, c_day, r_loc, r_day,
+						p_name, p_email, p_loc, p_hours, ta_name, ta_email, 
+						ta_loc, ta_hours)
+
+	Shhhh... Don't tell anyone, but this is pretty much the exact same as
+	create_course, except that it also takes a course object argument, which
+	it updates, instead of creating a new one from scratch
+	Arg1: course object (ndb.Model course)
+	Arg2 - 15: Same as create_course's 1-14
+
+add_user_to_course(self, course, user)
+
+	This method is really easy! just send it a course and user object 
+	and it'll add the user id to the course's list of ids
+	Arg1: course object
+	Arg2: user object
+
+get_courses(self, user)
+
+	Send this method the user object that you want to get the courses for
+	It grabs that user's id, and queries the courses for courses containing
+	that user id, and returns the list of courses. Remember to check if
+	the return value is None!
+	Arg1: user object (ndb.Model User)
+
+
+get_assignments_for_course(self, course)
+
+	Takes a course and returns a list of assignments. Make
+	sure to check if the returned list is empty! 
+	Arg1: course object (ndb.Model Course)
+
+get_all_assignments_for_user(self, user)
+
+	Takes a user and returns a list of assignments (course agnostic). 
+	This method is going to be a little more involved, because we take the
+	user, grab all their courses from their id, then use each of course ids
+	to find assignments
+	Make sure to check if the returned list is empty!
+	Arg1: user object (ndb.Model User)
+
+create_assignment(self, course, a_type, d_date, r_date, d, g)
+
+	Creates a new assignment
+	Arg1: course object (ndb.Model Course)
+	Arg2: assignment type (int)
+	Arg3: due date (date property)
+	Arg4: reminder date (date time property)
+	Arg5: details (String)
+	Arg6: grade
+
+get_all_assignments_for_user(self, user)
+
+	Takes a user and returns a list of assignments (course agnostic). 
+	This method is going to be a little more involved, because we take the
+	user, grab all their courses from their id, then use each of course ids
+	to find assignments
+	Make sure to check if the returned list is empty!
+	Arg1: user object (ndb.Model User)
+
+update_assingment(self, assign, course, a_type, d_date, r_date, d, g)
+
+	Takes an assignment and updates fields
+	Arg1: the assignment object (ndb.Model Assignment)
+	Arg2-7: same as 1-6 in create_assignment
+
+does_user_exist(self, l)
+
+	Checks if the user exists, returns true if yes, false if no
+	Arg1: User's login
+
+fetch_user_by_id(self, id)
+	Grabs user by their id, returns the user if they exists, none otherwise
+	Arg1: user's id
+

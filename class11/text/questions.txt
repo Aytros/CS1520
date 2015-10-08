@@ -1,0 +1,6 @@
+1	What is your name?	Sir Lancelot	Sir Galahad	Sir Robin
+2	What is your quest?	I seek the grail.	I don't know.
+3	What is your favorite color?	Blue	Red	Yellow
+4	What is the capital of Assyria?	Ashur	Babylonia	Akkadia
+5	What is the airspeed of an unladen swallow?	An African or European swallow?	22mph	3 knots
+6	This is my new question	A	B	C

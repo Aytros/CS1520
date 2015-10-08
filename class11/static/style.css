@@ -1,0 +1,26 @@
+h1 {
+  font-family: Impact;
+}
+
+.Question {
+  font-family: Helvetica;
+  border-top: 1px solid #000000;
+  margin: 2px;
+  display: block;
+  font-weight: bold;
+  padding: 2px;
+}
+
+.Answer {
+  font-family: Helvetica;
+  padding: 8px;
+  border: 2px solid #0000ff;
+  background-color: #909090;
+  display: inline;
+  color: #ffffff;
+  margin: 5px;
+}
+
+body {
+  font-family: Arial;
+}

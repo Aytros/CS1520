@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block head %}
+	<title>CS1520: Group Project</title>
+	<link rel="stylesheet" type="text/css" href="css/userpage.css">
+	<script type="text/javascript" src="js/userpage.js"></script>
+	<link href='http://fonts.googleapis.com/css?family=Kalam|Roboto+Slab' rel='stylesheet' type='text/css'>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="js/modal.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/modal.css">
+{% endblock %}
+
+{% block maincontent %}
+	<div id="content-container">
+		<div class="left">
+			<h3>Upcoming Assignments</h3>
+			<div class="left-content">
+				<table id="cpassig-table">
+					{% if assignments %}
+					<tr>
+						<th>Assignment</th>
+						<th>Course</th>
+						<th>Due Date</th>
+					</tr>
+					{% for a in assignments %}
+					<tr class="cpassig-row" onclick="expand(this, event);">
+						<td>{{ a.title }}</td>
+						<td>{{ a.course }}</td>
+						<td>{{ a.month }}/{{ a.day }}</td>
+					</tr>
+					<tr class="cpassig-expand-row">
+						<td colspan="3">
+							<strong>Details:</strong><br>
+							<div class="expand-row-content">
+								{{ a.details }}
+							</div>
+						</td>
+					</tr>
+					{% endfor %}
+					{% else %}
+					<tr>
+						<td colspan="3">No assignments to display</td>
+					</tr>
+					{% endif %}
+				</table>
+			</div>
+		</div>
+		<div class="right">
+			<h3>Courses</h3>
+			<div class="right-content">
+				{% if courses %}
+				{% for c in courses %}
+				<p id="course"><a href="{{ c.url }}">{{ c.number }} : {{ c.title }} : {{ c.professor }}</a></p>
+				{% endfor %}
+				{% else %}
+				<p id="course">You are currently not enrolled in any courses. Click the 'Add Course' button below.</p>
+				{% endif %}
+				<div class="button" onclick="modal.pop()">Add Course</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

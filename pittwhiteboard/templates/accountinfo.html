@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block head %}
+	<title>CS1520: Group Project</title>
+	<link rel="stylesheet" type="text/css" href="css/accountinfo.css">
+	<link href='http://fonts.googleapis.com/css?family=Kalam|Roboto+Slab' rel='stylesheet' type='text/css'>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.11.1.js"></script>
+	<script type="text/javascript" src="js/modal.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/modal.css">
+{% endblock %}
+
+{% block maincontent %}
+	<div id="block1">
+		<form id="block2" action="" method="post" name="infoblock">
+			<input type="hidden" name="formId" value="infoblock">
+			First Name: <input type="text" name="first" id="first" value="{{ user.first }}"><br>
+			Last Name: <input type="text" name="last" id="last" value="{{ user.last }}"><br>
+			University: <input type="text" name="uni" id="uni" value="{{ user.university }}"><br><br>
+			<input id="change" type="submit" value="Submit" name="changeinfo">
+		</form><br>
+		<form id="block3" action="" method="post" name="mailblock">
+			<input type="hidden" name="formId" value="mailblock">
+			Current Email: <input type="text" name="curremail" value="{{ user.email }}"><br>
+			New Email: <input type="text" id="newmail" name="newmail"><br>
+			Confirm Email: <input type="text" id="conmail"name="conmail"><br><br>
+			<input id="change" type="submit" value="Submit" name="changemail">
+		</form><br>
+		<form id="block4" action="" method="post" name="passblock">
+			<input type="hidden" name="formId" value="passblock">
+			Current Password: <input type="password" name="currpass" value="{{ user.password }}"><br>
+			New Password: <input type="password" id="newpass" name="newpass"><br>
+			Confirm Password: <input type="password" id="conpass" name="conpass"><br><br>
+			<input id="change" type="submit" value="Submit" name="changepass">
+		</form>
+	</div>
+{% endblock %}

@@ -1,0 +1,12 @@
+indexes:
+- kind: User
+  ancestor: yes
+  properties:
+  - name: date
+    direction: desc
+- kind: Course
+  ancestor: yes
+  properties:
+  	- name: date
+  	  direction: desc
+  	 

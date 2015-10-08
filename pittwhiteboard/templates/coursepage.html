@@ -1,0 +1,135 @@
+
+{% extends "base.html" %}
+{% block head %}
+	<title>CS1520: Group Project</title>
+	
+	<script type="text/javascript" src="js/jquery-datepicker.js"></script>
+	<script type="text/javascript" src="js/coursepage.js"></script>
+	<script type="text/javascript" src="js/modal.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/jquery-datepicker.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-datepicker.structure.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery-datepicker.theme.css">
+	<link rel="stylesheet" type="text/css" href="css/coursepage.css">
+	<link rel="stylesheet" type="text/css" href="css/modal.css">
+	<link href='http://fonts.googleapis.com/css?family=Kalam|Roboto+Slab' rel='stylesheet' type='text/css'>
+{% endblock %}
+
+{% block maincontent %}
+	<!-- MAIN CONTENT -->
+	<div id="content-container">
+
+		<div class="left">
+			<h3>Instructor Information</h3>
+			<div class="left-content">
+				<table id="instructor-table">
+					<tr>
+						<td>Name:</td><td>{{ course.professor_name }}</td>
+					</tr>
+					<tr>
+						<td>Email:</td><td><a href="mailto:{{ course.professor_email }}">{{ course.professor_email }}</a></td>
+					</tr>
+					<tr>
+						<td>Office:</td><td>{{ course.professor_office_location }}</td>
+					</tr>
+					<tr>
+						<td>Office Hours:</td><td>{{ course.professor_office_hours }}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="right">
+			<h3>TA Information</h3>
+			<div class="right-content">
+				<table id="instructor-table">
+					<tr>
+						<td>Name:</td><td>{{ course.ta_name }}</td>
+					</tr>
+					<tr>
+						<td>Email:</td><td><a href="mailto:{{ course.ta_email }}">{{ course.ta_email }}</a></td>
+					</tr>
+					{% if course.ta_link != None and course.ta_link != '' %}
+					<tr>
+						<td>Website:</td><td><a href="{{ course.ta_link }}" target="_blank">TA Website</a></td>
+					</tr>
+					{% endif %}
+					<tr>
+						<td>Office:</td><td>{{ course.ta_office_location }}</td>
+					</tr>
+					<tr>
+						<td>Office Hours:</td><td>{{ course.ta_office_hours }}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+
+		<div class="left">
+			<h3>Course Information</h3>
+			<div class="left-content">
+				<table id="instructor-table">
+					<tr>
+						<td>Name:</td><td>{{ course.name }}</td>
+					</tr>
+					<tr>
+						<td>Location:</td><td>{{ course.course_location }}</td>
+					</tr>
+					<tr>
+						<td>Times:</td><td>{{ course.course_day_time }}</td>
+					</tr>
+					<tr>
+						<td>Rec. Location:</td><td>{{ course.recitation_location }}</td>
+					</tr>
+					<tr>
+						<td>Rec. Times:</td><td>{{ course.recitation_day_time }}</td>
+					</tr>
+					{% if course.course_link != None and course.course_link != '' %}
+					<tr>
+						<td>Website:</td><td><a href="{{course.course_link}}" target="_blank">Course Website</a></td>
+					</tr>
+					{% endif %}
+					{% if course.syllabus != None and course.syllabus != '' %}
+					<tr>
+						<td>Syllabus:</td><td><a href="documents/{{ course.syllabus }}" target="_blank">Click</a></td>
+					</tr>
+					{% endif %}
+				</table>
+			</div>
+		</div>
+
+		<div class="right">
+			<h3>Grading Schema</h3>
+			<div>
+				<table id="grading-schema-table">
+					{% for assignment in assignment_types %}
+					<p>
+					<tr>
+						<td>{{ assignment.name }}{% if assignment.quantity > 1 %} ({{ assignment.quantity }}){% endif %}</td>
+						<td>{{ assignment.percent_of_total }}%</td>
+					</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+
+		<div class="center">
+			<h3>Assignments</h3>
+			<div class="center-content">
+				<table id="cpassig-table">
+					<tr>
+						<th>Assignment Name</th>
+						<th>Type</th>
+						<th>Due Date</th>
+					</tr>
+				</table>
+				<button class="button" onclick="modal.pop();">Add</button>
+			</div>
+		</div>
+
+	</div>
+	<!-- END MAIN CONTENT -->
+	<!-- HIDDEN CONTENT -->
+	<input id="assignments" type="hidden" value="{{assignments_json}}"></input>
+	<input id="assignment-types" type="hidden" value="{{assignment_types_json}}"></input>
+	<input id="course_id" type="hidden" value="{{course.key.id}}"></input>
+	<!-- END HIDDEN CONTENT -->
+{% endblock %}

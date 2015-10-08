@@ -1,0 +1,88 @@
+
+.post{
+
+	margin-left: 30%;
+	margin-top:40px;
+	width:40%;
+
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+
+	padding: 10px;
+
+	-webkit-box-shadow: 10px 10px 30px 2px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    10px 10px 30px 2px rgba(50, 50, 50, 0.75);
+	box-shadow:         10px 10px 30px 2px rgba(50, 50, 50, 0.75);
+}
+
+
+.post h1{
+	font-size: 24px;
+	text-align:center;
+
+	border-color: black;
+	border-width: 0px 0px 1px 0px;
+	border-style: solid;
+
+	width:100%;
+}
+
+.post .comment-list{
+	list-style: none;
+
+	width: 80%;	
+}
+
+.post .comment-list li{
+	margin-top: 20px;
+
+	padding: 10px;
+
+	border-color: #DDD;
+	border-width: 0px 0px 1px 0px;
+	border-style: solid;
+}
+
+.post .comment-list textarea{
+	width: 100%;
+}
+
+#post-form{
+	margin-left: 30%;
+
+	width:40%;
+
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+
+	padding: 10px;
+
+	-webkit-box-shadow: 10px 10px 30px 2px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow:    10px 10px 30px 2px rgba(50, 50, 50, 0.75);
+	box-shadow:         10px 10px 30px 2px rgba(50, 50, 50, 0.75);
+}
+
+#post-form textarea{
+	width: 100%;
+	height: 60px;	
+}
+
+.menu{
+	float: left;
+	position: fixed;
+
+	top : 20px;
+
+}
+.menu ul{
+	list-style:none;
+}
+
+.menu ul li{
+	background-color: #EEE;
+
+	padding: 10px;
+	margin-top:4px;
+}

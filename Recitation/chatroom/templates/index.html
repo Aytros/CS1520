@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<link rel="stylesheet" href="stylesheets/style.css">
+		<script type="text/javascript" src="javascripts/app.js"></script>
+
+	</head>
+	<body>		
+		<div id="chat-container" class="bar">
+			<button id="users-button" value="" onClick="showUsers()">Show Users</button>
+			<h1>Chat</h1>
+			<div id="chat">
+
+			</div>
+
+			<textarea  rows="4" cols="100" id="posttext"></textarea>	
+			<button value="post" onClick="post()" >Post</button>
+			<form action="logout">
+				<button value="">Logout</button>
+			</form>
+
+		</div>
+		<div id="user-container" class="bar">
+			<button id="hide-button"  value="" onClick="hideUsers()">Hide</button>
+			<h1>Users</h1>
+			<ul id="userlist">			
+			</ul>
+		</div>
+	</body>		
+</html>

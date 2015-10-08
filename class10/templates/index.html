@@ -1,0 +1,23 @@
+<html>
+<head>
+  <link rel="stylesheet" href="static/style.css">
+  <script src="static/script.js">
+  </script>
+</head>
+<body>
+  <h1>QUIZ TIME</h1>
+  <form method="post" action="submitquiz">
+  {% for question in questions %}
+  <input type="hidden" name="q{{question.id}}" id="q{{question.id}}">
+  <div class="Question">{{ question.text }}</div><br>
+  {% for answer in question.answers %}
+  <div onclick="chooseAnswer(this.id);" class="Answer" id="q{{question.id}}a{{forloop.counter}}">
+    {{answer}}
+  </div>
+  {% endfor %}
+  <br><br><br>
+  {% endfor %}
+  <input type="submit">
+  </form>
+</body>
+</html>

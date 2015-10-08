@@ -1,0 +1,3 @@
+[ {% for note in notes %}{% if forloop.counter0 %},{% endif %}
+{ "id" : "{{ note.id }}", "title" : "{{ note.title }}" }{% endfor %} 
+]

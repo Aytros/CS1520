@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script type="text/javascript">
+		function toggle(id, id2)
+		{
+			var e=document.getElementById(id);
+			var f=document.getElementById(id2);
+			if (e.style.display=='')
+				e.style.display='none';
+			else
+				e.style.display='';
+				f.style.display='none';
+				
+		}
+		function viewPassword()
+		{
+			if (document.getElementById("view").checked)
+			{
+				document.getElementById("pass").type='text';
+			}
+			else
+			{
+				document.getElementById("pass").type='password';
+			}
+		}
+	</script>
+	<title>CS1520: Group Project</title>
+	<link rel="stylesheet" type="text/css" href="css/draft2style.css">
+	<link href='http://fonts.googleapis.com/css?family=Kalam|Roboto+Slab' rel='stylesheet' type='text/css'>
+</head>
+<body>
+	<div id="header"><h1>Whiteboard</h1><br>Contact Us: cs1520pitt@gmail.com</div>
+	<div id="signin">
+		<button class="button" name="log" onclick="toggle('log', 'reg')">Login</button>
+		<div id="log" style="display:none">
+			<form action="" method="post" name="userLog"><br><br>
+				<input type="hidden" name="formId" value="userLog">
+				Username: <input type="text" name="username"><br>
+				Password: <input type="password" name="pwd"><br>
+				<input type="submit" class="button" value="Login" name="sub">
+			</form>
+		</div><br><br>
+		<button class="button" name="reg" onclick="toggle('reg', 'log')">Register</button>
+		<div id="reg" style="display:none">
+			<form action="" method="post" name="userReg"><br><br>
+				<input type="hidden" name="formId" value="userReg">
+				First Name: <input type="text" name="first"><br>
+				Last Name: <input type="text" name="last"><br>
+				Password: <input type="password" name="pass" id="pass"><br>
+				<input id="view" type="checkbox" name="view" onclick="viewPassword()"> View Password<br>
+				University: <input type="text" name="uni"><br>
+				Email: <input type="text" name="studId"><br>
+				<input type="submit" class="button" value="Register" name="regSub">
+			</form>
+		</div><br><br>
+	</div>
+
+</body>
+</html>

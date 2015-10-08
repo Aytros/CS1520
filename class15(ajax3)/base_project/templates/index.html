@@ -1,0 +1,174 @@
+<html>
+<body>
+<h1>Simple Notes</h1>
+<a href="javascript:showAllNotes();">Show All</a> | <a href="javascript:createNote();">Create Note</a><br><br>
+<div id="mycontent">Things will happen right here!</div>
+<script>
+
+// changes will keep track of how many changes we make,
+// so we don't send an AJAX request on every single keystroke.
+var changes = 0;
+
+// We'll use this function to identify that something has changed.
+function noteChanged() {
+  changes++;
+  setText('message', '');
+  
+  // after 20 changes, we'll save the current state.
+  if (changes % 20 == 0) {
+    saveNote();
+  } else {
+    // just in case a user stops in the middle of an edit, we'll
+    // call saveNote in 5 seconds.  We'll also pass in the current change count.
+    setTimeout('saveNote(' + changes + ');', 5000);
+  }
+}
+
+// This function retrievers our note as a JSON object.
+function showNote(id) {
+    var xmlHttp = createXmlHttp();
+    xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState == 4) {
+        var note = JSON.parse(xmlHttp.responseText);
+        
+        // our JSON returns an array - this is so that later, if we want more, we won't
+        // have to react differently or build a new service.
+        if (note.length == 1) {
+          // we call create note to build the form on the page
+          createNote(note[0].id);
+          // we set the values for text & title
+          setValue('ctext', note[0].text);
+          setValue('ctitle', note[0].title);
+        }
+      }
+    }
+    postParameters(xmlHttp, '/detail', 'id=' + encodeURIComponent(id));
+}
+
+// this will save the currently open note.
+function saveNote(lastCount) {
+
+  // we check lastCount here to make sure that either there's no lastCount parameter,
+  // or the lastCount parameter matches the last change - that way we limit the number
+  // of requests we send.
+  if (!lastCount || lastCount == changes) {
+    changes++;
+    setText('message', 'Saving...');
+    var xmlHttp = createXmlHttp();
+    xmlHttp.onreadystatechange = function() {
+      if (xmlHttp.readyState == 4) {
+        var response = JSON.parse(xmlHttp.responseText);
+        if (response.result == 'OK') {
+          setText('message', 'All changes saved.');
+          setValue('cid', response.id);
+        } else {
+          setText('message', 'Problem saving note.');
+        }
+      }
+    }
+    
+    // we build up a parameter string here
+    var params = encodeParameter('title', getValue('ctitle'));
+    params += "&";
+    params += encodeParameter('id', getValue('cid'));
+    params += "&";
+    params += encodeParameter('text', getValue('ctext'));
+    postParameters(xmlHttp, '/save', params);
+  }
+}
+
+// this creates the form for a new note.
+function createNote(id) {
+  var text = '';
+  text += '<form>';
+  text += 'Title:<br><input type="text" id="ctitle" onkeyup="noteChanged();"><br><br><br>';
+  text += 'Text:<br><textarea id="ctext" onkeyup="noteChanged();"></textarea><br><br><br>';
+  text += '<input type="button" value="Save" onclick="saveNote();">';
+  text += '<input type="hidden" id="cid" value="';
+  if (id) {
+    text += id;
+  }
+  text += '">';
+  text += '</form>';
+  text += '<div id="message"></div>';
+  setText('mycontent', text);
+}
+
+// this is just a convenience function to set the value of a form field
+function setValue(id, value) {
+  document.getElementById(id).value = value;
+}
+
+// this is just a convenience function to set the value of an HTML element
+function setText(id, text) {
+  document.getElementById(id).innerHTML = text;
+}
+
+// this is just a convenience function to create a name=value pair, escaped properly
+// the encodeURIComponent function is built-in to your browser / JavaScript environment.
+function encodeParameter(name, value) {
+  return encodeURIComponent(name) + "=" + encodeURIComponent(value);
+}
+
+// this is just a convenience function to retrive the value of a form field.
+function getValue(id) {
+  return document.getElementById(id).value;
+}
+
+// this will give us the list of notes - we pass the results off to updateTitleList
+function showAllNotes() {
+  var xmlHttp = createXmlHttp();
+  xmlHttp.onreadystatechange = function() {
+    if (xmlHttp.readyState == 4) {
+      var titleList = JSON.parse(xmlHttp.responseText);
+      updateTitleList(titleList);
+    }
+  }
+  postParameters(xmlHttp, '/titles', '');
+}
+
+// this dynamically builds an unordered list of notes based on the parameter
+function updateTitleList(noteTitles) {
+  var text = '<ul>';
+  if (!noteTitles || noteTitles.length == 0) {
+    text += '<li>No notes.</li>';
+  } else {
+    for (var i = 0; i < noteTitles.length; i++) {
+      text += '<li><a href="javascript:showNote(\'' + noteTitles[i].id + '\');">';
+      text += noteTitles[i].title + '</a></li>';
+    }
+  }
+  text += '</ul>';
+  setText('mycontent', text);
+}
+
+// we use this function to abstract the creation of the XML HTTP object.  
+// Because of browser differences, we want to isolate browser-specific code.
+function createXmlHttp() {
+  var xmlhttp;
+  if (window.XMLHttpRequest) {
+    xmlhttp = new XMLHttpRequest();
+  } else {
+    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+  }
+  if (!(xmlhttp)) {
+    alert("your horrible browser does not support AJAX, get with it man");
+  }
+  return xmlhttp;
+}
+
+// Since we'll be posting parameters to a URL over and over again, we can use this 
+// function to simplify the calls.  Also, since these calls are dependent on the
+// XML HTTP object's methods, it's not a bad idea to abstract this into a separate
+// function so that we can adapt easily if some of the object changes.
+function postParameters(xmlHttp, target, parameters) {
+  if (xmlHttp) {
+    xmlHttp.open("POST", target, true);
+    xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xmlHttp.send(parameters);
+  }
+}
+
+</script>
+</body>
+</html>
